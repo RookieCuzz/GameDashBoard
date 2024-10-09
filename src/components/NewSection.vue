@@ -12,7 +12,6 @@ const header = ref(null);
 
 const scrolling = () => {
   let value = window.scrollY;
-  console.log("HI", value);
 
   if (stars.value) stars.value.style.left = value * 0.25 + 'px';
   if (moon.value) moon.value.style.top = value * 1.05 + 'px';
@@ -64,7 +63,7 @@ onUnmounted(() => {
 
 section {
   position: relative;
-  width: 100%;
+  width: 100vw;
   height: 50vh;
   padding: 100px;
   display: flex;
@@ -140,6 +139,8 @@ section img#mountains_front {
   position: relative;
   padding: 100px;
   display: flex;
+  width: 2000px;
+  height: 2000px;
   flex-direction: row;
   justify-content: space-evenly;
 //background: #00bd7e;
