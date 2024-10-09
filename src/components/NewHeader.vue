@@ -2,11 +2,15 @@
 import NewSearch from "@/components/NewSearch.vue";
 import NewDropDown from "@/components/NewDropDown.vue";
 import { ref, onMounted, reactive } from 'vue';
-
+import {useRouter} from "vue-router";
+const router = useRouter(); // 获取路由实例
 // 控制下拉菜单开关状态
 const isDropdownOpen = ref(false);
 const dropdownStyle = reactive({});
-
+const goToLogin = () => {
+  // 使用 Vue Router 的 push 方法进行页面跳转
+  router.push({ name: 'LoginRegister' });
+};
 // 切换下拉菜单的显隐
 const toggleDropdown = (event) => {
   isDropdownOpen.value = !isDropdownOpen.value;
@@ -34,8 +38,8 @@ const toggleDropdown = (event) => {
 
     <ul>
       <li><new-search/></li>
-      <li><a href="#">Login</a></li>
-      <li><a href="#">Register</a></li>
+      <li><a href="#" @click="goToLogin">登录</a></li>
+      <li><a href="#">注册</a></li>
     </ul>
   </header>
 </template>

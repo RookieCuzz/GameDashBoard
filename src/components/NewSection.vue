@@ -44,15 +44,24 @@ onUnmounted(() => {
     <a href="#sec" id="btn" ref="btn">PLAY.4399MC.CN</a>
     <img src="@/assets/images/mountains_front.png" id="mountains_front" ref="mountains_front">
   </section>
-
   <div class="sec" id="sec">
-    <chat-box/>
-    <h2>bbbbbbbbbbbbbbbb</h2>
-    <p>(内容随意发挥)hhhhhhhhhh.</p>
+<!--    <chat-box/>-->
+    <div class="content">
+      <div class="part1">666</div>
+      <div class="part2">666</div>
+      <div class="part3">666</div>
+    </div>
+
+
   </div>
 </template>
 
 <style scoped>
+
+.content{
+  width: 100%;
+}
+
 section {
   position: relative;
   width: 100%;
@@ -119,8 +128,42 @@ section img#mountains_front {
 .sec {
   position: relative;
   padding: 100px;
-  background: #1c0522;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  //background: #00bd7e;
+  background: linear-gradient(to bottom, #1c0522, #2b1055);
   min-height: 2000px;
+  top: -10px;
+}
+.content {
+  position: relative;
+  padding: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+//background: #00bd7e;
+
+  top: -160px;
+}
+.part1 {
+  background: rgb(128, 128, 128);
+  border-radius: 10px;
+  width: 20%;
+  height: 1000px;
+}
+
+.part2 {
+  border-radius: 10px;
+  background: rgb(128, 128, 128);
+  width: 50%;
+  height: 1000px;
+}
+.part3 {
+  background: rgb(128, 128, 128);
+  width: 20%;
+  height: 1000px;
+  border-radius: 10px;
 }
 
 .sec h2 {
