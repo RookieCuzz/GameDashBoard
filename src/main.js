@@ -2,6 +2,7 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
+import Void from './components/Void.vue'
 import router from './router';  // 引入刚刚创建的路由配置
 // 引入 Font Awesome 核心库
 import { library } from '@fortawesome/fontawesome-svg-core'

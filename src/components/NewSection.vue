@@ -159,6 +159,7 @@ section img#mountains_front {
   width: 50%;
   height: 1000px;
 }
+
 .part3 {
   background: rgb(128, 128, 128);
   width: 20%;
