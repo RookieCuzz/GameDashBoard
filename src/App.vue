@@ -17,9 +17,11 @@ header {
 }
 
 .main{
-  background-color: transparent;
+  background: linear-gradient(to bottom, #1c0522, #2b1055);
   width: 100%;
-  height: 1000px;
+  min-height: 100vh;
+  height: fit-content;
+
 }
 
 </style>

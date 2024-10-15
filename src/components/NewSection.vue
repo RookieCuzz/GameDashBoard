@@ -33,6 +33,68 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("scroll", scrolling);
 });
+const lst = [
+  {
+    title: "Welcome to 明月��",
+    content: "Welcome to 明月��, a world where the moonlight shines brightly. The landscape is serene and peaceful, with towering mountains and a gentle river flowing nearby. You can explore this magical world and discover hidden treasures."
+  },
+  {
+    title: "Discover the hidden treasures",
+    content: "To find hidden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, you can return it to the treasure chest to claim your reward."
+  },
+  {
+    title: "Join the adventure",
+    content: "To join the adventure, you can participate in various challenges and activities in the magical world. Each challenge will provide you with rewards and opportunities to explore new areas and discover hidden treasures."
+  },
+  {
+    title: "Stay tuned for more updates",
+    content: "Stay tuned for more updates on the magical world anddden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure,  its hidden treasures. You can follow us on social media or join our community to get the latest news and updates."
+  },
+  {
+    title: "Join our community",
+    content: "Join our community on 4399MC.CN and share your experiences and discover new ways to play the magical world. You can also become a member of our exclusive forums and chat rooms to connect with other players and share your knowledge and edden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, xperiences."
+  },
+  {
+    title: "Welcome to 明月��",
+    content: "Welcome to 明月��, a world whdden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, ere the moonlight shines brightly. The landscape is serene and peaceful, with towering mountains and a gentle river flowing nearby. You can explore this magical world and discover hidden treasures."
+  },
+  {
+    title: "Discover the hidden treasures",
+    content: "To find hidden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, you can return it to the treasure chest to claim your reward."
+  },
+  {
+    title: "Join the adventure",
+    content: "To join the adventure, you can participate in various challenges and activities in the magical world. Each challenge will provide yodden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, u with rewards and opportunities to explore new areas and discover hidden treasures."
+  },
+  {
+    title: "Stay tuned for more updates",
+    content: "Stay tuned for more updates on the mdden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, agical world and its hidden treasures. You can follow us on social media or join our community to get the latest news and updates."
+  },
+  {
+    title: "Join our community",
+    content: "Join our community on 4399MC.CN and share your experiences and discover new ways to play the magical world. You can also become a member of our exclusive forums and chat rooms to connect with other players and share your knowledge and experiences."
+  },
+  {
+    title: "Welcome to 明月��",
+    content: "Welcome to 明月��, a world where the moonlight shines brightly. The landscape is serene and peaceful, with towering mountains and a gentle river flowing nearby. You can explore this magical world and discover hidden treasures."
+  },
+  {
+    title: "Discover the hidden treasures",
+    content: "To find hidden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, you can return it to the treasuredden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure, dden treasures in the magical world, you can explore the area and look for hidden items. Once you find a treasure,  chest to claim your reward."
+  },
+  {
+    title: "Join the adventure",
+    content: "To join the adventure, you can participate in various challenges and activities in the magical world. Each challenge will provide you with rewards and opportunities to explore new areas and discover hidden treasures."
+  },
+  {
+    title: "Stay tuned for more updates",
+    content: "Stay tuned for more updates on the magical world and its hidden treasures. You can follow us on social media or join our community to get the latest news and updates."
+  },
+  {
+    title: "Join our community",
+    content: "Join our community on 4399MC.CN and share your experiences and discover new ways to play the magical world. You can also become a member of our exclusive forums and chat rooms to connect with other players and share your knowledge and experiences."
+  }
+]
 </script>
 
 <template>
@@ -48,7 +110,14 @@ onUnmounted(() => {
 <!--    <chat-box/>-->
     <div class="content">
       <div class="part1">666</div>
-      <div class="part2">666</div>
+      <div class="part2">
+        <div v-for="ele in lst">
+          <div class="text-box">
+            <h3>{{ ele.title }}</h3>
+            <p>{{ ele.content }}</p>
+          </div>
+        </div>
+      </div>
       <div class="part3">666</div>
     </div>
 
@@ -57,6 +126,20 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+
+.text-box{
+  width: 95%;
+  margin: 10px auto;
+  padding: 20px;
+  height: fit-content;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+.text-box p {
+  color: black !important; /* 强制设置文字颜色为黑色 */
+}
 
 .content{
   width: 100%;
@@ -127,45 +210,61 @@ section img#mountains_front {
 
 .sec {
   position: relative;
-  padding: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  //background: #00bd7e;
+  padding: 50px;
+  display: flex; /* 使用flex布局 */
+  justify-content: center; /* 水平居中 */
+  //align-items: center; /* 垂直居中 */
   background: linear-gradient(to bottom, #1c0522, #2b1055);
   min-height: 2000px;
   top: -10px;
 }
+
 .content {
   position: relative;
-  padding: 100px;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-//background: #00bd7e;
-
-  top: -160px;
+  justify-content: space-between; /* 保证内容项之间的间距 */
+  width: 100%; /* 确保内容占满可用宽度 */
+  max-width: 1200px; /* 限制内容的最大宽度 */
 }
-.part1 {
+
+.part1, .part2, .part3 {
   background: rgb(128, 128, 128);
   border-radius: 10px;
-  width: 20%;
-  height: 1000px;
+  min-height: 100rem;
+  height: fit-content;
+}
+
+.part1{
+  width: 20%; /* 初始宽度为 20% */
 }
 
 .part2 {
-  border-radius: 10px;
-  background: rgb(128, 128, 128);
-  width: 50%;
-  height: 1000px;
+  width: 53%; /* 初始宽度为 50% */
+}
+.part3{
+  width: 25%;
+}
+/* 使用 max-width 来根据视口宽度调整布局 */
+@media (min-width: 100vw) {
+  .content {
+    min-width: 25%;
+  }
 }
 
-.part3 {
-  background: rgb(128, 128, 128);
-  width: 20%;
-  height: 1000px;
-  border-radius: 10px;
+
+@media (max-width: 1200px) {
+  .part1, .part3 {
+    width: 25%;
+    min-width: 150px;
+  }
+
+  .part2 {
+    width: 60%;
+    min-width: 300px;
+  }
 }
+
 
 .sec h2 {
   font-size: 3.5em;
