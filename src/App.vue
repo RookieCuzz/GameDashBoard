@@ -13,7 +13,7 @@ import Slider from "@/components/Slider.vue";
     <new-header/>
     <router-view></router-view>
     <!--    <login/>-->
-    <new-section/>
+<!--    <new-section/>-->
   </div>
 </template>
 

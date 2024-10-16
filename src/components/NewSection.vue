@@ -12,6 +12,7 @@ const header = ref(null);
 
 const scrolling = () => {
   let value = window.scrollY;
+  console.log("HI", value);
 
   if (stars.value) stars.value.style.left = value * 0.25 + 'px';
   if (moon.value) moon.value.style.top = value * 1.05 + 'px';
@@ -106,7 +107,7 @@ const lst = [
     <img src="@/assets/images/mountains_front.png" id="mountains_front" ref="mountains_front">
   </section>
   <div class="sec" id="sec">
-<!--    <chat-box/>-->
+    <!--    <chat-box/>-->
     <div class="content">
       <div class="part1">666</div>
       <div class="part2">
@@ -146,7 +147,7 @@ const lst = [
 
 section {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 50vh;
   padding: 100px;
   display: flex;
@@ -221,8 +222,6 @@ section img#mountains_front {
 .content {
   position: relative;
   display: flex;
-  width: 2000px;
-  height: 2000px;
   flex-direction: row;
   justify-content: space-between; /* 保证内容项之间的间距 */
   width: 100%; /* 确保内容占满可用宽度 */
