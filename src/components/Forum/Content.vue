@@ -1,17 +1,55 @@
 <script setup>
 import { ref } from 'vue';
 
-// 使用响应式数据
-const likes = ref([150, 163, 104]); // 每个帖子初始的点赞数
-const liked = ref([false, false, false]); // 每个帖子是否被点赞
+// 帖子数据
+const posts = ref([
+  {
+    id: 1,
+    username: 'Muffin',
+    avatar: '/src/assets/forum/7.jpg',
+    content: 'Throw out your best memes that are created by you and are related to CCG.' +
+        'Throw out your best memes that are created by you and are related to CCG.Throw out' +
+        ' your best memes that are created by you and are related to CCG.Throw out your best memes ' +
+        'that are created by you and are related to CCG.' +
+        'Throw out your best memes that are created by you and are related to CCG.',
+    meme: '/src/assets/forum/p1.jpg',
+    likes: 150,
+    liked: false,
+    date: 'Jul 26, 2014',
+    floor: '# 1',
+  },
+  {
+    id: 2,
+    username: 'musemat',
+    avatar: '/src/assets/forum/8.jpg',
+    content: '',
+    meme: '/src/assets/forum/p3.jpg',
+    likes: 163,
+    liked: false,
+    date: 'Jul 26, 2014',
+    floor: '# 2',
+  },
+  {
+    id: 3,
+    username: 'Muffin',
+    avatar: '/src/assets/forum/9.jpg',
+    content: '',
+    meme: '/src/assets/forum/p2.png',
+    likes: 104,
+    liked: false,
+    date: 'Jul 26, 2014',
+    floor: '# 3',
+  },
+]);
 
+// 点赞/取消点赞功能
 const toggleLike = (index) => {
-  if (liked.value[index]) {
-    likes.value[index]--;
+  if (posts.value[index].liked) {
+    posts.value[index].likes--;
   } else {
-    likes.value[index]++;
+    posts.value[index].likes++;
   }
-  liked.value[index] = !liked.value[index];
+  posts.value[index].liked = !posts.value[index].liked;
 };
 </script>
 
@@ -20,7 +58,6 @@ const toggleLike = (index) => {
     <!-- Forum Info Section -->
     <div class="forum-info">
       <div class="forum-header">
-
         <div class="forum-title-container">
           <div class="forum-title">Halloween 2024 - Lobby Quests, Ender, Maps & More!</div>
           <div class="forum-metadata">
@@ -28,186 +65,105 @@ const toggleLike = (index) => {
           </div>
         </div>
       </div>
-
       <div class="forum-stats">
         <span class="forum-views">1.2k 人看过</span> • <span class="forum-replies">350 条回复</span>
       </div>
     </div>
+
+    <!-- Post Container -->
     <div class="post-container">
-      <!-- Original Post -->
-      <div class="post">
+      <!-- 动态加载帖子 -->
+      <div v-for="(post, index) in posts" :key="post.id" class="post">
         <div class="profile">
           <div class="avatar">
-            <img src="https://via.placeholder.com/50" alt="Avatar">
-          </div>
-          <div  class="post_info">
-            <div class="username">Muffin</div>
-
-          </div>
-        </div>
-        <div class="post-content">
-          Throw out your best memes that are created by you and are related to CCG.
-
-          <!-- 添加 meme 图像部分 -->
-          <div class="meme">
-            <img src="https://via.placeholder.com/600x300" alt="Meme Image">
-          </div>
-
-          <button class="like-button" :class="{ liked: liked[0] }" @click="toggleLike(0)">
-            <font-awesome-icon :icon="['fas', 'thumbs-up']" />
-            {{ liked[0] ? 'Unlike' : 'Like' }}
-          </button>
-          <span class="likes-count">有{{ likes[0] }}人觉得很赞</span>
-          <span class="post-date">Jul 26, 2014</span>
-        </div>
-      </div>
-
-      <!-- Reply 1 -->
-      <div class="post">
-        <div class="profile">
-          <div class="avatar">
-            <img src="https://via.placeholder.com/50" alt="Avatar">
-          </div>
-          <div  class="post_info">
-            <div class="username">musemat</div>
-            <div class="post-date">Jul 26, 2014</div>
-          </div>
-        </div>
-        <div class="post-content">
-
-          <!-- 添加 meme 图像部分 -->
-          <div class="meme">
-            <img src="https://via.placeholder.com/300x400" alt="Meme Image">
-          </div>
-
-          <button class="like-button" :class="{ liked: liked[1] }" @click="toggleLike(1)">
-            <font-awesome-icon :icon="['fas', 'thumbs-up']" />
-            {{ liked[1] ? 'Unlike' : 'Like' }}
-          </button>
-          <span class="likes-count">{{ likes[1] }}</span>
-        </div>
-      </div>
-
-      <!-- Reply 2 -->
-      <div class="post">
-        <div class="profile">
-          <div class="avatar">
-            <img src="https://via.placeholder.com/50" alt="Avatar">
+            <img :src="post.avatar" alt="Avatar">
           </div>
           <div class="post_info">
-            <div class="username">Muffin</div>
-            <div class="post-date">Jul 26, 2014</div>
+            <div class="username">{{ post.username }}</div>
           </div>
         </div>
+        <!-- 楼层信息 -->
+        <div class="floor-number">{{ post.floor }}</div>
         <div class="post-content">
-
-          <!-- 添加 meme 图像部分 -->
-          <div class="meme">
-            <img src="https://via.placeholder.com/400x500" alt="Meme Image">
+          <div v-if="post.content" class="text">{{ post.content }}</div>
+          <div v-if="post.meme" class="meme">
+            <img :src="post.meme" alt="Meme Image">
           </div>
-
-          <button class="like-button" :class="{ liked: liked[2] }" @click="toggleLike(2)">
+          <button class="like-button" :class="{ liked: post.liked }" @click="toggleLike(index)">
             <font-awesome-icon :icon="['fas', 'thumbs-up']" />
-            {{ liked[2] ? 'Unlike' : 'Like' }}
+            {{ post.liked ? '取消点赞' : '点赞' }}
           </button>
-          <span class="likes-count">{{ likes[2] }}</span>
+          <span class="likes-count">有 {{ post.likes }} 人觉得很赞</span>
+          <span class="post-date">{{ post.date }}</span>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
 
-.forum-container{
-  width: 48vw;
+
+<style scoped>
+.text {
+  text-align: justify;
+}
+.forum-container {
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
-  margin-top: 200px;
-}
-.post-container {
-  margin: 30px auto;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  margin-top: 150px;
+  border-radius: 68px 68px 0 0;
 }
 
-/* Enhanced Forum Info Styling */
+.post-container {
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  background-color: #fff;
+  border-radius: 12px;
+}
+.post-container ::before {
+  background-color: #d50000;/* Soft light background for posts */
+  border-radius: 5px;
+  position: absolute;
+
+}
 .forum-info {
   padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  color: #444; /* Darker gray for text */
+  position: relative;
 }
 
-.forum-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.forum-icon {
-  width: 40px;
-  height: 40px;
-  margin-right: 15px;
-}
-
-.forum-icon img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
-
-.forum-title-container {
-  display: flex;
-  flex-direction: column;
-}
 
 .forum-title {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
-  color: #FFF;
+  color: #fff;
 }
 
 .forum-metadata {
-  font-size: 16px;
-  color: #c9c9c9;
+  font-size: 14px;
+  color: #f3106e;
 }
-
-.author {
-  font-weight: 600;
-}
-
-.date {
-  font-style: italic;
-}
-
 
 .forum-stats {
-  margin-top: 15px;
-  font-size: 14px;
-  color: #e2e2e2;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #f3106e;
 }
 
-.forum-stats span {
-  margin-right: 15px;
-}
-
-/* Post and Profile Styling */
 .post {
-  display: flex;
-  justify-content: flex-start;
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-}
 
-.reply {
-  padding-left: 65px;
+  position: relative;
+  display: flex;
+  border-bottom: 1px solid #e0e0e0; /* Light gray for post separator */
+  margin-bottom: 20px;
+  margin-top: 10px;
 }
 
 .profile {
-  margin-right: 20px;
+  padding-right: 15px; /* Light gray for profile border */
+  margin-bottom: 20px;
 }
 
 .avatar {
@@ -221,55 +177,93 @@ const toggleLike = (index) => {
   height: 100%;
 }
 
-.post_info{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
 .username {
-  margin: 0 auto;
-  font-weight: 700;
-  color: #ff6600;
+  font-weight: 600;
+  color: #f3106e;
+  text-align: center;
+  font-size: 18px;
+
 }
 
-.post-date{
-float: right;
+.post-date {
+  font-size: 12px;
+  color: #888;
+  position: absolute;
+  right: 10px; /* 右边距 */
+  bottom: 5px; /* 底部边距 */
 }
 
 .post-content {
-  margin-top: 15px;
-}
-
-.meme {
-  margin-top: 15px;
+  width: 75%;
+  margin-bottom: 30px;
+  margin-left: 20px;
 }
 
 .meme img {
-  max-width: 100%;
+  width: 100%;
+  max-width: 500px;
   border-radius: 8px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
 }
 
 .like-button {
-  background-color: #ff6600;
+  background-color: #f3106e;
   color: #fff;
   border: none;
   border-radius: 5px;
-  padding: 5px 10px;
+  padding: 6px 12px;
   cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
 }
 
 .like-button:hover {
-  background-color: #e65c00;
+  background-color: #f475a9;
 }
 
 .like-button.liked {
-  background-color: #007bff;
+  background-color: #df4141;
 }
 
 .likes-count {
-  display: inline-block;
   margin-left: 10px;
-  color: #888;
+  font-size: 14px;
+  color: #555;
 }
+
+.floor-number {
+  position: absolute;
+  top: -20px;
+  right: 0px;
+  font-size: 16px;
+  color: #918e8e;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .forum-container {
+    padding: 15px;
+    margin-top: 100px;
+  }
+
+  .post {
+    flex-direction: column;
+  }
+
+  .profile {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .meme img {
+    max-width: 100%;
+  }
+}
+
+
 </style>

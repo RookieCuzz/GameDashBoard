@@ -1,3 +1,4 @@
+
 <script setup>
 import { ref, onMounted } from "vue";
 
@@ -188,56 +189,36 @@ const goToNextPage = () => {
   border-radius: 8px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 100%; /* 确保它占满父容器的宽度 */
-  margin: 0 auto;
-  padding-left: 10px; /* 添加 padding 以保持与 .news-header 一致 */
 }
+
+.news-container {
+  max-width: 800px;         /* 桌面视图限制最大宽度 */
+  margin: 0 auto;           /* 居中显示 */
+  padding-top: 150px;
+  padding-left: 20px;       /* 添加一些左右内边距 */
+  padding-right: 20px;
+  box-sizing: border-box;   /* 确保内边距不会影响宽度 */
+}
+
 
 
 .news-header {
   font-size: 24px;
   font-weight: bold;
   color: #ffffff;
-  /* 确保宽度占据父容器的全部 */
-  width: 100%;
-  text-align: left; /* 确保文本左对齐 */
-  margin-top: 0; /* 调整 margin 以去除不必要的空间 */
-  padding-left: 10px; /* 添加 padding 以保持与 .news-box 一致 */
+  margin-bottom: 20px;
 }
-
-
-
-.news-container {        /* 桌面视图限制最大宽度 */
-  box-sizing: border-box;   /* 确保内边距不会影响宽度 */
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-
-
-
 
 .pagination {
   margin-bottom: 15px;
   color: #ffffff;
-
 }
 
 .pagination span {
   margin-right: 10px;
   cursor: pointer;
   font-weight: bold;
-  color: #0073e6;
-}
-
-.pagination span.active {
-  color: #ff6347;
-}
-
-.pagination span.disabled {
-  color: #999;
-  cursor: not-allowed;
+  color: #ffffff;
 }
 
 .news-list {
