@@ -12,6 +12,9 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 // 引入 Font Awesome Vue 组件
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons'; // 导入 thumbs-up 图标
+
+library.add(faThumbsUp);
 
 // 将图标添加到库中
 library.add(faSearch)

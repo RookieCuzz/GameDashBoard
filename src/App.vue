@@ -25,7 +25,8 @@ header {
 .main{
   background-color: transparent;
   width: 100%;
-  height: 1000px;
+  min-height: 100vh;
+  height: fit-content;
 }
 
 </style>

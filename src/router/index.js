@@ -2,18 +2,24 @@ import { createRouter, createWebHistory } from 'vue-router';
 import App from "@/App.vue";
 import Login from "@/components/Login.vue";
 import Forum from "@/components/Forum/List.vue";
-import Void from "@/components/Void.vue";
+import Home from "@/components/NewSection.vue";
 import Page from "@/components/Pagination.vue";
+import ForumContent from "@/components/Forum/Content.vue";
 const routes = [
     {
-        path: '/',
+        path: '/home',
         name: 'Home',
-        component: Void
+        component: Home
     },
     {
         path: '/forum',
         name: 'Forum',
         component: Forum
+    },
+    {
+        path: '/',
+        name: 'ForumContent',
+        component: ForumContent
     },
     {
         path: '/page',
