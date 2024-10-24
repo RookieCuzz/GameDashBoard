@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-
 // 帖子数据
 const posts = ref([
   {
@@ -12,7 +11,7 @@ const posts = ref([
         ' your best memes that are created by you and are related to CCG.Throw out your best memes ' +
         'that are created by you and are related to CCG.' +
         'Throw out your best memes that are created by you and are related to CCG.',
-    meme: '/src/assets/forum/p1.jpg',
+    meme: ['/src/assets/forum/p1.jpg','/src/assets/forum/p3.jpg','/src/assets/forum/p3.jpg'],
     likes: 150,
     liked: false,
     date: 'Jul 26, 2014',
@@ -22,8 +21,8 @@ const posts = ref([
     id: 2,
     username: 'musemat',
     avatar: '/src/assets/forum/8.jpg',
-    content: '',
-    meme: '/src/assets/forum/p3.jpg',
+    content: '222',
+    meme: [],
     likes: 163,
     liked: false,
     date: 'Jul 26, 2014',
@@ -34,7 +33,7 @@ const posts = ref([
     username: 'Muffin',
     avatar: '/src/assets/forum/9.jpg',
     content: '',
-    meme: '/src/assets/forum/p2.png',
+    meme: ['/src/assets/forum/p2.png'],
     likes: 104,
     liked: false,
     date: 'Jul 26, 2014',
@@ -87,17 +86,20 @@ const toggleLike = (index) => {
         <div class="post-content">
           <div v-if="post.content" class="text">{{ post.content }}</div>
           <div v-if="post.meme" class="meme">
-            <img :src="post.meme" alt="Meme Image">
+            <img :src="meme" v-for="meme in post.meme" alt="Meme Image">
           </div>
-          <button class="like-button" :class="{ liked: post.liked }" @click="toggleLike(index)">
-            <font-awesome-icon :icon="['fas', 'thumbs-up']" />
-            {{ post.liked ? '取消点赞' : '点赞' }}
-          </button>
-          <span class="likes-count">有 {{ post.likes }} 人觉得很赞</span>
+          <div class="like-button-wrapper">
+            <button class="like-button" :class="{ liked: post.liked }" @click="toggleLike(index)">
+              <font-awesome-icon :icon="['fas', 'thumbs-up']" />
+              <text>{{ post.liked ? '取消点赞' : '点赞' }}</text>
+            </button>
+            <span class="likes-count">有 {{ post.likes }} 人觉得很赞</span>
+          </div>
           <span class="post-date">{{ post.date }}</span>
         </div>
       </div>
     </div>
+<!--    <Editor></Editor>-->
   </div>
 </template>
 
@@ -109,6 +111,7 @@ const toggleLike = (index) => {
 }
 .forum-container {
   max-width: 900px;
+  min-width: 20vw;
   margin: 0 auto;
   padding: 20px;
   margin-top: 150px;
@@ -190,19 +193,19 @@ const toggleLike = (index) => {
   color: #888;
   position: absolute;
   right: 10px; /* 右边距 */
-  bottom: 5px; /* 底部边距 */
+  bottom: 8px; /* 底部边距 */
 }
 
 .post-content {
   width: 75%;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   margin-left: 20px;
 }
-
+.meme {
+  justify-content: center;
+}
 .meme img {
   width: 100%;
-  max-width: 500px;
-  border-radius: 8px;
   margin-top: 10px;
   border: 1px solid #ddd;
 }
@@ -214,7 +217,6 @@ const toggleLike = (index) => {
   border-radius: 5px;
   padding: 6px 12px;
   cursor: pointer;
-  margin-top: 10px;
   transition: background-color 0.3s ease;
 }
 
@@ -226,10 +228,15 @@ const toggleLike = (index) => {
   background-color: #df4141;
 }
 
+.like-button-wrapper {
+  display: inline-flex;
+  position: absolute;
+  bottom: 10px;
+  align-items: center;
+}
+
 .likes-count {
-  margin-left: 10px;
-  font-size: 14px;
-  color: #555;
+  margin-left: 10px; /* 为按钮和点赞计数之间添加间距 */
 }
 
 .floor-number {
@@ -245,25 +252,61 @@ const toggleLike = (index) => {
   display: inline-block;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
+
   .forum-container {
-    padding: 15px;
+    padding: 10px;
     margin-top: 100px;
+    border-radius: 40px 40px 0 0;
   }
 
-  .post {
-    flex-direction: column;
+
+  .username {
+    font-size: 10px;
+    width: fit-content;
+    margin: 0 auto;
+  }
+  .avatar{
+    width: 50px;
+    height: 50px;
+  }
+  .post-content {
+    width: 100%;
+    margin-bottom: 40px;
+    margin-left: 0;
+    font-size: 8px;
   }
 
-  .profile {
-    margin-right: 0;
-    margin-bottom: 15px;
+
+  .floor-number {
+    font-size: 6px;
+    top: -20px;
+    right: -15px;
+    padding: 4px 8px;
+  }
+  .post-date{
+    font-size: 6px;
+    right: -5px;
+    bottom: 5px;
   }
 
-  .meme img {
-    max-width: 100%;
+  .forum-title {
+    font-size: 12px;
+  }
+  .like-button{
+    width: 35px;
+    height: 15px;
+    padding: 0;
+    font-size: 5px;
+  }
+  .likes-count{
+    font-size: 6px;
+    margin-left: 5px;
+  }
+
+  .forum-metadata, .forum-stats {
+    font-size: 6px;
   }
 }
-
 
 </style>
