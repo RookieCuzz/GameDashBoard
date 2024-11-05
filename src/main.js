@@ -19,3 +19,4 @@ library.add(faThumbsUp);
 // 将图标添加到库中
 library.add(faSearch)
 createApp(App).use(router).use(ElementPlus).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
+

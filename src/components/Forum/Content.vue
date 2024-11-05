@@ -1,5 +1,8 @@
+
 <script setup>
-import { ref } from 'vue';
+import { ref} from 'vue';
+import CustomEditor from '@/components/Forum/Editor.vue'
+
 // 帖子数据
 const posts = ref([
   {
@@ -9,7 +12,7 @@ const posts = ref([
     content: 'Throw out your best memes that are created by you and are related to CCG.' +
         'Throw out your best memes that are created by you and are related to CCG.Throw out' +
         ' your best memes that are created by you and are related to CCG.Throw out your best memes ' +
-        'that are created by you and are related to CCG.' +
+        'that are created by you and are related  to CCG.' +
         'Throw out your best memes that are created by you and are related to CCG.',
     meme: ['/src/assets/forum/p1.jpg','/src/assets/forum/p3.jpg','/src/assets/forum/p3.jpg'],
     likes: 150,
@@ -21,7 +24,7 @@ const posts = ref([
     id: 2,
     username: 'musemat',
     avatar: '/src/assets/forum/8.jpg',
-    content: '222',
+    content: '<p><u><strong>haaaae</strong></u><u><em>aaa</em></u><u>lo</u></p><h1>你好</h1><h2><em>各位mc们</em></h2><h1 style="text-align: center; line-height: 2;"><span style="color: rgb(225, 60, 57); background-color: rgb(245, 219, 77); font-size: 29px; font-family: 微软雅黑;">我们宣布一件重要的事情</span></h1><p style="text-align: left;">今天发布了新版本：</p><p style="text-align: left;"> &nbsp; &nbsp; &nbsp; &nbsp;0.10.0版本更新了如下功能：</p><ol><li style="text-align: left;">可以发布帖子</li><li style="text-align: left;">可以与他人交流</li><li style="text-align: left;">能够做出交互动作</li></ol><div data-w-e-type="todo" style="text-align: left;"><input type="checkbox" disabled="">还是不能参与大型活动</div><div data-w-e-type="todo" style="text-align: left;"><input type="checkbox" disabled="" checked="">喜欢黑暗系</div><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p>',
     meme: [],
     likes: 163,
     liked: false,
@@ -40,7 +43,9 @@ const posts = ref([
     floor: '# 3',
   },
 ]);
-
+const formattedContent = (content) => {
+  return content.replace(/\n/g, '<br>');
+};
 // 点赞/取消点赞功能
 const toggleLike = (index) => {
   if (posts.value[index].liked) {
@@ -50,6 +55,7 @@ const toggleLike = (index) => {
   }
   posts.value[index].liked = !posts.value[index].liked;
 };
+
 </script>
 
 <template>
@@ -84,7 +90,7 @@ const toggleLike = (index) => {
         <!-- 楼层信息 -->
         <div class="floor-number">{{ post.floor }}</div>
         <div class="post-content">
-          <div v-if="post.content" class="text">{{ post.content }}</div>
+          <div v-if="post.content" class="text" v-html="formattedContent(post.content)"></div>
           <div v-if="post.meme" class="meme">
             <img :src="meme" v-for="meme in post.meme" alt="Meme Image">
           </div>
@@ -99,15 +105,48 @@ const toggleLike = (index) => {
         </div>
       </div>
     </div>
-<!--    <Editor></Editor>-->
+    <!--    这是quill富文本编辑器-->
+    <div>
+      <CustomEditor />
+    </div>
+    <button class="quill-submit">发布</button>
   </div>
 </template>
 
+<style>
 
+.quill-submit {
+  background-color: #0080ff;
+  color: #fff;
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 300px;
+  cursor: pointer;
+  border-radius: 5px; /* 添加圆角 */
+  //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影 */
+  transition: background-color 0.3s, transform 0.2s; /* 添加过渡效果 */
+}
+.quill-submit:hover {
+  background-color: #005bb5; /* 鼠标悬停时更改背景色 */
+  transform: translateY(-2px); /* 鼠标悬停时轻微上移 */
+}
+.quill-submit:active {
+  transform: scale(0.95); /* 点击时缩小 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 点击时减小阴影 */
+}
+</style>
 
 <style scoped>
+
 .text {
   text-align: justify;
+  word-wrap: break-word; /* 允许在单词边界内换行 */
+  overflow-wrap: break-word; /* 兼容性 */
 }
 .forum-container {
   max-width: 900px;
