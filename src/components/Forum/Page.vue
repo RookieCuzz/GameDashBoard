@@ -1,261 +1,242 @@
 <template>
-  <div class="pagination-container">
-    <div class="pagination">
-      <!-- Previous Button -->
-      <button
-          class="pagination-btn"
-          :disabled="currentPage === 1"
-          @click="goToPage(currentPage - 1)">
-        上一页
-      </button>
-
-      <!-- Page Numbers -->
-      <span
-          v-if="currentPage > 2"
-          class="page-number"
-          @click="goToPage(1)">
-        1
-      </span>
-
-      <span v-if="currentPage > 3" class="ellipsis">...</span>
-
-      <span
-          v-for="page in displayedPages"
-          :key="page"
-          :class="['page-number', { active: page === currentPage }]"
-          @click="goToPage(page)">
+    <div class="pagination-container">
+        <div class="pagination">
+            <!-- Previous Button -->
+            <button
+                class="pagination-btn"
+                v-if="props.currentPage > 1"
+                @click="goToPage(1)">
+                首页
+            </button>
+            <button
+                class="pagination-btn"
+                :disabled="props.currentPage === 1"
+                @click="goToPage(props.currentPage - 1)">
+                上一页
+            </button>
+            <span
+                v-for="page in pages"
+                :key="page"
+                :class="['page-number', { active: page === props.currentPage }]"
+                @click="goToPage(page)">
         {{ page }}
       </span>
-
-      <span v-if="currentPage < totalPages - 2" class="ellipsis">...</span>
-
-      <span
-          v-if="currentPage < totalPages - 1"
-          class="page-number"
-          @click="goToPage(totalPages)">
-        {{ totalPages }}
-      </span>
-
-      <!-- Next Button -->
-      <button
-          class="pagination-btn"
-          :disabled="currentPage === totalPages"
-          @click="goToPage(currentPage + 1)">
-        下一页
-      </button>
-
-      <!-- Jump to page input -->
-      <input
-          v-model="jumpPage"
-          type="number"
-          min="1"
-          :max="totalPages"
-          placeholder="Go to page"
-          class="jump-input"
-      />
-      <button
-          class="pagination-btn"
-          @click="goToPage(jumpPage)"
-          :disabled="jumpPage < 1 || jumpPage > totalPages"
-      >
-        跳转
-      </button>
+            <button
+                class="pagination-btn"
+                :disabled="props.currentPage === totalPages"
+                @click="goToPage(currentPage + 1)">
+                下一页
+            </button>
+            <button
+                class="pagination-btn"
+                v-if="props.currentPage < totalPages"
+                @click="goToPage(totalPages)">
+                尾页
+            </button>
+            <!-- Jump to page input -->
+            <input
+                v-model="jumpPage"
+                type="number"
+                min="1"
+                :max="totalPages"
+                placeholder="Go to page"
+                class="jump-input"
+            />
+            <button
+                class="pagination-btn"
+                @click="goToPage(jumpPage)"
+                :disabled="jumpPage < 1 || jumpPage > totalPages"
+            >
+                跳转
+            </button>
+        </div>
     </div>
-
-    <!-- Current Page Data Display -->
-    <div class="data-list">
-      <ul>
-        <li v-for="item in data" :key="item.id">{{ item.name }}</li>
-      </ul>
-    </div>
-  </div>
 </template>
 
-<script>
-import { ref, onMounted, watch } from 'vue';
-import axios from 'axios';
+<script setup>
+import { defineProps, defineEmits, computed, ref } from "vue";
 
-export default {
-  name: 'Pagination',
-  props: {
-    apiUrl: {
-      type: String,
-      required: true
+const props = defineProps({
+    currentPage: {
+        type: Number,
+        required: true
     },
-    pageSize: {
-      type: Number,
-      default: 1
+    totalItems: {
+        type: Number,
+        required: true
+    },
+    itemsPerPage: {
+        type: Number,
+        required: true
+    },
+    local_page: {
+        type: Number,
+        default: 1,
+        required: false
     }
-  },
-  setup(props) {
-    const currentPage = ref(1);
-    const totalPages = ref(0);
-    const data = ref([]);
-    const totalItems = ref(0);
-    const jumpPage = ref(1);  // For storing the input value of the page to jump to
+});
+const emit = defineEmits(["page-changed"]);
 
-    // Simulating fake data for testing pagination
-    const fetchData = async () => {
-      try {
-        // Fake data instead of API call
-        const response = {
-          total: 10,
-          data: [
-            { id: 1, name: "Item 1" },
-            { id: 2, name: "Item 2" },
-            { id: 3, name: "Item 3" },
-            { id: 4, name: "Item 4" },
-            { id: 5, name: "Item 5" },
-            { id: 6, name: "Item 6" },
-            { id: 7, name: "Item 7" },
-            { id: 8, name: "Item 8" },
-            { id: 9, name: "Item 9" },
-            { id: 10, name: "Item 10" }
-          ]
-        };
+const currentPage = ref(1);
+const data = ref([]);
+const totalItems = ref(0);
+const jumpPage = ref(1);  // For storing the input value of the page to jump to
+const totalPages = computed(() => {
+    return Math.ceil(props.totalItems / props.itemsPerPage);
+});
+// Simulating fake data for testing pagination
 
-        totalItems.value = response.total;
-        data.value = response.data.slice((currentPage.value - 1) * props.pageSize, currentPage.value * props.pageSize);
-        totalPages.value = Math.ceil(totalItems.value / props.pageSize);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    // Handle page change
-    const goToPage = (page) => {
-      if (page < 1 || page > totalPages.value) return;
-      currentPage.value = page;
-      jumpPage.value = page;  // Update the input field when jumping
-      fetchData(); // Trigger data update when page changes
-    };
-
-    // Dynamically calculate pages to display
-    const getDisplayedPages = () => {
-      let pages = [];
-      const total = totalPages.value;
-      const current = currentPage.value;
-
-      // Show 1, the current page and the last page, along with pages around the current page
-      if (total <= 7) {
-        // If the total pages are less than or equal to 7, show all pages
-        pages = Array.from({ length: total }, (_, index) => index + 1);
-      } else {
-        // Always show first 1, the last page and current page surrounding pages
-        pages = [current - 1, current, current + 1].filter(page => page > 0 && page <= total);
-
-        if (current > 3) {
-          pages.unshift(current - 2); // Show first page if we're more than 3 pages in
-        }
-
-        if (current < total - 2) {
-          pages.push(current + 2); // Show last page if we're less than 3 pages from the end
-        }
-
-        // Ensure the last item is not the current page + 1 when it's out of bounds
-        if (pages[pages.length - 1] === total && pages[pages.length - 2] !== total - 1) {
-          pages.splice(pages.length - 1, 1);
-        }
-      }
-
-      return pages;
-    };
-
-    // Watch for page change to update displayed pages
-    const displayedPages = ref([]);
-    watch(currentPage, () => {
-      displayedPages.value = getDisplayedPages();
-    });
-
-    // Initial data fetch when the component is mounted
-    onMounted(() => {
-      fetchData();
-      displayedPages.value = getDisplayedPages();
-    });
-
-    return {
-      currentPage,
-      totalPages,
-      data,
-      jumpPage,  // Add the page input field model
-      goToPage,
-      displayedPages
-    };
-  }
+// Handle page change
+const goToPage = (page) => {
+    if (page < 1 || page > totalPages.value) return;
+    if (page !== props.currentPage) {
+        emit("page-changed", page);
+    }
 };
+
+// Dynamically calculate pages to display
+// Dynamically calculate pages to display
+// 计算要显示的页码列表
+const pages = computed(() => {
+    const total = totalPages.value;
+    let startPage = Math.max(props.currentPage - 2, 1);
+    let endPage = Math.min(props.currentPage + 2, total);
+
+    if (total <= 5) {
+        return Array.from({ length: total }, (_, i) => i + 1);
+    }
+
+    if (props.currentPage <= 3) {
+        endPage = 5;
+    } else if (props.currentPage + 2 >= total) {
+        startPage = total - 4;
+    }
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+});
+
 </script>
 
 <style scoped>
 .pagination-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 300px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
 }
 
 .pagination-btn {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 10px;
-  margin: 0 5px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 14px;
+    background: linear-gradient(45deg, #007bff, #1e90ff);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.pagination-btn:hover {
+    background: linear-gradient(45deg, #0056b3, #005bb5);
+    transform: translateY(-2px);
 }
 
 .pagination-btn:disabled {
-  background-color: #ddd;
-  cursor: not-allowed;
+    background: #ccc;
+    cursor: not-allowed;
 }
 
 .page-number {
-  padding: 10px;
-  cursor: pointer;
-  margin: 0 5px;
-  font-size: 14px;
-  color: #ff0000;
-  border-style: solid;
-}
-
-.page-number.active {
-  font-weight: bold;
-  color: #3498db;
+    padding: 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    font-size: 16px;
+    color: #3498db;
+    border-radius: 5px;
+    transition: color 0.3s, background-color 0.3s;
+    min-width: 40px;
+    text-align: center;
 }
 
 .page-number:hover {
-  text-decoration: underline;
+    background-color: #f0f0f0;
+    color: #1e90ff;
 }
 
-.ellipsis {
-  padding: 10px;
-  font-size: 14px;
+.page-number.active {
+    font-weight: bold;
+    color: white;
+    background-color: #3498db;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+/*.ellipsis {*/
+/*    padding: 10px;*/
+/*    font-size: 16px;*/
+/*    color: #888;*/
+/*    min-width: 40px;*/
+/*    text-align: center;*/
+/*}*/
 
 .jump-input {
-  width: 60px;
-  padding: 0 5px;
-  margin: 0 10px 0 10px;
-  font-size: 14px;
+    width: 70px;
+    padding: 5px 10px;
+    margin: 0 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s;
+}
+
+.jump-input:focus {
+    outline: none;
+    border-color: #3498db;
 }
 
 .data-list {
-  margin-top: 20px;
-  color: #00a676;
+    margin-top: 30px;
+    color: #2c3e50;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    padding: 20px;
 }
 
 .data-list ul {
-  list-style: none;
-  padding: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .data-list li {
-  padding: 5px;
-  border-bottom: 1px solid #ccc;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
+
+.data-list li:last-child {
+    border-bottom: none;
+}
+
+.data-list li:hover {
+    background-color: #f9f9f9;
+}
+
 </style>
