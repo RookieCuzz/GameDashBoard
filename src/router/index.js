@@ -23,6 +23,11 @@ const routes = [
         component: Fpage
     },
     {
+        path: '/forumc',
+        name: 'ForumContent',
+        component: ForumContent
+    },
+    {
         path: '/page',
         name: 'Page',
         component: Page

@@ -12,11 +12,14 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 // 引入 Font Awesome Vue 组件
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons'; // 导入 thumbs-up 图标
+import { faThumbsUp, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'; // 导入 thumbs-up 图标
+import { Icon } from '@iconify/vue';
+
 
 library.add(faThumbsUp);
-
+library.add(faArrowLeft);
+library.add(faArrowRight);
 // 将图标添加到库中
-library.add(faSearch)
-createApp(App).use(router).use(ElementPlus).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
+library.add(faSearch);
+createApp(App).use(router).use(ElementPlus).component('font-awesome-icon', FontAwesomeIcon).component('Icon', Icon).mount('#app')
 

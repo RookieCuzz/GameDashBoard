@@ -1,50 +1,125 @@
 
 <script setup>
-import { ref} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import CustomEditor from '@/components/Forum/Editor.vue'
-
+import Page from '@/components/Forum/Page.vue'
+const postList = ref([]);
+const totalItems = ref(0); // 总数量
+const currentPage = ref(1); // 当前页码
+const itemsPerPage = ref(3); // 每页显示数量
 // 帖子数据
-const posts = ref([
-  {
-    id: 1,
-    username: 'Muffin',
-    avatar: '/src/assets/forum/7.jpg',
-    content: 'Throw out your best memes that are created by you and are related to CCG.' +
-        'Throw out your best memes that are created by you and are related to CCG.Throw out' +
-        ' your best memes that are created by you and are related to CCG.Throw out your best memes ' +
-        'that are created by you and are related  to CCG.' +
-        'Throw out your best memes that are created by you and are related to CCG.',
-    meme: ['/src/assets/forum/p1.jpg','/src/assets/forum/p3.jpg','/src/assets/forum/p3.jpg'],
-    likes: 150,
-    liked: false,
-    date: 'Jul 26, 2014',
-    floor: '# 1',
-  },
-  {
-    id: 2,
-    username: 'musemat',
-    avatar: '/src/assets/forum/8.jpg',
-    content: '<p><u><strong>haaaae</strong></u><u><em>aaa</em></u><u>lo</u></p><h1>你好</h1><h2><em>各位mc们</em></h2><h1 style="text-align: center; line-height: 2;"><span style="color: rgb(225, 60, 57); background-color: rgb(245, 219, 77); font-size: 29px; font-family: 微软雅黑;">我们宣布一件重要的事情</span></h1><p style="text-align: left;">今天发布了新版本：</p><p style="text-align: left;"> &nbsp; &nbsp; &nbsp; &nbsp;0.10.0版本更新了如下功能：</p><ol><li style="text-align: left;">可以发布帖子</li><li style="text-align: left;">可以与他人交流</li><li style="text-align: left;">能够做出交互动作</li></ol><div data-w-e-type="todo" style="text-align: left;"><input type="checkbox" disabled="">还是不能参与大型活动</div><div data-w-e-type="todo" style="text-align: left;"><input type="checkbox" disabled="" checked="">喜欢黑暗系</div><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p>',
-    meme: [],
-    likes: 163,
-    liked: false,
-    date: 'Jul 26, 2014',
-    floor: '# 2',
-  },
-  {
-    id: 3,
-    username: 'Muffin',
-    avatar: '/src/assets/forum/9.jpg',
-    content: '',
-    meme: ['/src/assets/forum/p2.png'],
-    likes: 104,
-    liked: false,
-    date: 'Jul 26, 2014',
-    floor: '# 3',
-  },
-]);
-const formattedContent = (content) => {
-  return content.replace(/\n/g, '<br>');
+const posts = ref();
+const fetchNews = async (page = 1, limit = 10) => {
+    const data = [
+        {
+            id: 1,
+            username: 'Muffin',
+            avatar: '/src/assets/forum/7.jpg',
+            content: 'Throw out your best memes that are created by you and are related to CCG.' +
+                'Throw out your best memes that are created by you and are related to CCG.Throw out' +
+                ' your best memes that are created by you and are related to CCG.Throw out your best memes ' +
+                'that are created by you and are related  to CCG.' +
+                'Throw out your best memes that are created by you and are related to CCG.',
+            meme: ['/src/assets/forum/p1.jpg','/src/assets/forum/p3.jpg','/src/assets/forum/p3.jpg'],
+            likes: 150,
+            liked: false,
+            date: 'Jul 26, 2014',
+            floor: '# 1',
+        },
+        {
+            id: 2,
+            username: 'musemat',
+            avatar: '/src/assets/forum/8.jpg',
+            content: '<p><u><strong>haaaae</strong></u><u><em>aaa</em></u><u>lo</u></p><h1>你好</h1><h2><em>各位mc们</em></h2><h1 style="text-align: center; line-height: 2;"><span style="color: rgb(225, 60, 57); background-color: rgb(245, 219, 77); font-size: 29px; font-family: 微软雅黑;">我们宣布一件重要的事情</span></h1><p style="text-align: left;">今天发布了新版本：</p><p style="text-align: left;"> &nbsp; &nbsp; &nbsp; &nbsp;0.10.0版本更新了如下功能：</p><ol><li style="text-align: left;">可以发布帖子</li><li style="text-align: left;">可以与他人交流</li><li style="text-align: left;">能够做出交互动作</li></ol><div data-w-e-type="todo" style="text-align: left;"><input type="checkbox" disabled="">还是不能参与大型活动</div><div data-w-e-type="todo" style="text-align: left;"><input type="checkbox" disabled="" checked="">喜欢黑暗系</div><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p>',
+            meme: [],
+            likes: 163,
+            liked: false,
+            date: 'Jul 26, 2014',
+            floor: '# 2',
+        },
+        {
+            id: 3,
+            username: 'Muffin',
+            avatar: '/src/assets/forum/9.jpg',
+            content: '',
+            meme: ['/src/assets/forum/p2.png'],
+            likes: 104,
+            liked: false,
+            date: 'Jul 26, 2014',
+            floor: '# 3',
+        },
+        {
+            id: 4,
+            username: 'Muffin',
+            avatar: '/src/assets/forum/4.jpg',
+            content: 'Halloween is almost here! Here are some ideas for your Halloween decorations and games:',
+            meme: [],
+            likes: 98,
+            liked: false,
+            date: 'Jul 26, 2014',
+            floor: '# 4',
+        },
+        {
+            id: 5,
+            username: 'Muffin',
+            avatar: '/src/assets/forum/5.jpg',
+            content: 'Here are some Halloween costumes that you can make with your friends:',
+            meme: [],
+            likes: 85,
+            liked: false,
+            date: 'Jul 26, 2014',
+            floor: '# 5',
+        },
+        {
+            id: 6,
+            username: 'Muffin',
+            avatar: '/src/assets/forum/6.jpg',
+            content: 'Here are some Halloween games that you can play with your friends:',
+            meme: [],
+            likes: 78,
+            liked: false,
+            date: 'Jul 26, 2014',
+            floor: '# 6',
+        },
+        {
+            id: 7,
+            username: 'Muffin',
+            avatar: '/src/assets/forum/7.jpg',
+            content: 'Here are some Halloween costumes that you can make with your friends:',
+            meme: [],
+            likes: 72,
+            liked: false,
+            date: 'Jul 26, 2014',
+            floor: '# 7',
+
+        }
+
+    ];
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({
+                data: data.slice((page - 1) * limit, page * limit),
+                total: data.length
+            });
+        }, 500); // 模拟延迟
+    });
+};
+const loadPage = async (page) => {
+    const { data, total } = await fetchNews(page, itemsPerPage.value);
+    postList.value = data;
+    totalItems.value = total;
+};
+onMounted(() => {
+    loadPage(currentPage.value);
+});
+watch(currentPage, (newPage) => {
+    loadPage(newPage);
+});
+const changePage = (page) => {
+    if (page !== currentPage.value) {
+        currentPage.value = page;
+    }
 };
 // 点赞/取消点赞功能
 const toggleLike = (index) => {
@@ -74,11 +149,17 @@ const toggleLike = (index) => {
         <span class="forum-views">1.2k 人看过</span> • <span class="forum-replies">350 条回复</span>
       </div>
     </div>
-
+      <Page
+              :current-page="currentPage"
+              :total-items="totalItems"
+              :items-per-page="itemsPerPage"
+              :showJumpPage="true"
+              @page-changed="changePage"
+      />
     <!-- Post Container -->
     <div class="post-container">
       <!-- 动态加载帖子 -->
-      <div v-for="(post, index) in posts" :key="post.id" class="post">
+      <div v-for="(post, index) in postList" :key="post.id" class="post">
         <div class="profile">
           <div class="avatar">
             <img :src="post.avatar" alt="Avatar">
@@ -90,7 +171,7 @@ const toggleLike = (index) => {
         <!-- 楼层信息 -->
         <div class="floor-number">{{ post.floor }}</div>
         <div class="post-content">
-          <div v-if="post.content" class="text" v-html="formattedContent(post.content)"></div>
+          <div v-if="post.content" class="text" v-html="post.content"></div>
           <div v-if="post.meme" class="meme">
             <img :src="meme" v-for="meme in post.meme" alt="Meme Image">
           </div>

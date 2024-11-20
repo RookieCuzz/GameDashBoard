@@ -6,49 +6,52 @@
                 class="pagination-btn"
                 v-if="props.currentPage > 1"
                 @click="goToPage(1)">
-                首页
+                <Icon icon="mingcute:arrow-to-left-fill" />
+
             </button>
             <button
                 class="pagination-btn"
                 :disabled="props.currentPage === 1"
                 @click="goToPage(props.currentPage - 1)">
-                上一页
+                <font-awesome-icon :icon="['fas', 'arrow-left']" />
             </button>
-            <span
-                v-for="page in pages"
-                :key="page"
-                :class="['page-number', { active: page === props.currentPage }]"
-                @click="goToPage(page)">
+                <span
+                        v-for="page in pages"
+                        :key="page"
+                        :class="['page-number', { active: page === props.currentPage }]"
+                        @click="goToPage(page)">
         {{ page }}
       </span>
             <button
                 class="pagination-btn"
                 :disabled="props.currentPage === totalPages"
-                @click="goToPage(currentPage + 1)">
-                下一页
+                @click="goToPage(props.currentPage + 1)">
+                <font-awesome-icon :icon="['fas', 'arrow-right']" />
             </button>
             <button
                 class="pagination-btn"
                 v-if="props.currentPage < totalPages"
                 @click="goToPage(totalPages)">
-                尾页
+                <Icon icon="mingcute:arrow-to-right-fill" />
             </button>
             <!-- Jump to page input -->
-            <input
-                v-model="jumpPage"
-                type="number"
-                min="1"
-                :max="totalPages"
-                placeholder="Go to page"
-                class="jump-input"
-            />
+            <span v-if="showJumpPage === true">
+                <input
+                        v-model="jumpPage"
+                        type="number"
+                        min="1"
+                        :max="totalPages"
+                        placeholder="Go to page"
+                        class="jump-input"
+                />
             <button
-                class="pagination-btn"
-                @click="goToPage(jumpPage)"
-                :disabled="jumpPage < 1 || jumpPage > totalPages"
+                    class="pagination-btn"
+                    @click="goToPage(jumpPage)"
+                    :disabled="jumpPage < 1 || jumpPage > totalPages"
             >
-                跳转
+                <Icon icon="mingcute:arrows-right-fill" />
             </button>
+            </span>
         </div>
     </div>
 </template>
@@ -67,6 +70,10 @@ const props = defineProps({
     },
     itemsPerPage: {
         type: Number,
+        required: true
+    },
+    showJumpPage: {
+        type: Boolean,
         required: true
     },
     local_page: {
@@ -120,9 +127,9 @@ const pages = computed(() => {
 <style scoped>
 .pagination-container {
     display: flex;
-    flex-direction: column;
+    /*flex-direction: column;*/
     align-items: center;
-    margin-top: 300px;
+    /*margin-top: 300px;*/
     font-family: 'Roboto', sans-serif;
 }
 
@@ -132,8 +139,8 @@ const pages = computed(() => {
     align-items: center;
     gap: 10px;
     padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 100%;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
 
 }
 
@@ -206,37 +213,4 @@ const pages = computed(() => {
     outline: none;
     border-color: #3498db;
 }
-
-.data-list {
-    margin-top: 30px;
-    color: #2c3e50;
-    width: 100%;
-    max-width: 600px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background: #ffffff;
-    padding: 20px;
-}
-
-.data-list ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.data-list li {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-.data-list li:last-child {
-    border-bottom: none;
-}
-
-.data-list li:hover {
-    background-color: #f9f9f9;
-}
-
 </style>

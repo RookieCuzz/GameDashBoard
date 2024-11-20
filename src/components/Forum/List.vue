@@ -12,7 +12,7 @@ const random_timestamp = (monthsAgo = 2) => {
 const newsList = ref([]);
 const totalItems = ref(0); // 总新闻数量
 const currentPage = ref(1); // 当前页码
-const itemsPerPage = ref(5); // 每页显示数量
+const itemsPerPage = ref(3); // 每页显示数量
 
 const formatDate = (timestamp) => {
     const date = new Date(Number(timestamp));
@@ -54,7 +54,7 @@ const goToDetails = (id) => {
 
 // 模拟 API 请求
 const fetchNews = async (page = 1, limit = 10) => {
-    const allNews = [
+    const data = [
         { id: 1, title: "New Game Update Released! 🎮", avatar: "/src/assets/forum/1.jpg", author: "JohnDoe", publish_time: random_timestamp(1), replies: 45, views: "8K" },
         { id: 2, title: "Exciting Patch Notes for Upcoming Game", avatar: "/src/assets/forum/2.jpg", author: "JaneDoe", publish_time: random_timestamp(2), replies: 30, views: "5K" },
         { id: 3, title: "Winter Wonderland Event Announced! ❄️", avatar: "/src/assets/forum/3.jpg", author: "SnowMan", publish_time: random_timestamp(3), replies: 12, views: "3K" },
@@ -70,8 +70,8 @@ const fetchNews = async (page = 1, limit = 10) => {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve({
-                data: allNews.slice((page - 1) * limit, page * limit),
-                total: allNews.length
+                data: data.slice((page - 1) * limit, page * limit),
+                total: data.length
             });
         }, 500); // 模拟延迟
     });
@@ -92,40 +92,28 @@ watch(currentPage, (newPage) => {
     loadPage(newPage);
 });
 
-// 分页跳转函数
+// 分页跳转函数,接受子组件传递过来的page信息
 const changePage = (page) => {
     if (page !== currentPage.value) {
         currentPage.value = page;
     }
 };
 
-// Previous 和 Next 按钮的点击处理函数
-const goToPreviousPage = () => {
-    if (currentPage.value > 1) {
-        currentPage.value -= 1;
-    }
-};
-
-const goToNextPage = () => {
-    const totalPages = Math.ceil(totalItems.value / itemsPerPage.value);
-    if (currentPage.value < totalPages) {
-        currentPage.value += 1;
-    }
-};
 </script>
 
 <template>
     <div class="news-container">
         <div class="news-header">
             <p>News</p>
-            <Page
-                    :current-page="currentPage"
-                    :total-items="totalItems"
-                    :items-per-page="itemsPerPage"
-                    @page-changed="changePage"
-            />
-        </div>
 
+        </div>
+        <Page
+            :current-page="currentPage"
+            :total-items="totalItems"
+            :items-per-page="itemsPerPage"
+            :showJumpPage="true"
+            @page-changed="changePage"
+        />
         <div class="news-box">
             <ul class="news-list">
                 <li v-for="news in newsList" :key="news.id" class="news-item">
@@ -149,6 +137,13 @@ const goToNextPage = () => {
                 </li>
             </ul>
         </div>
+<!--        <Page-->
+<!--            :current-page="currentPage"-->
+<!--            :total-items="totalItems"-->
+<!--            :items-per-page="itemsPerPage"-->
+<!--            :showJumpPage="true"-->
+<!--            @page-changed="changePage"-->
+<!--        />-->
     </div>
 </template>
 
