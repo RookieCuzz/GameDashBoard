@@ -9,6 +9,12 @@ const currentPage = ref(1); // 当前页码
 const itemsPerPage = ref(3); // 每页显示数量
 // 帖子数据
 const posts = ref();
+const props = defineProps({
+    forum_id: {
+        type: String,
+        required: true
+    }
+});
 const fetchNews = async (page = 1, limit = 10) => {
     const data = [
         {
@@ -110,8 +116,10 @@ const loadPage = async (page) => {
     postList.value = data;
     totalItems.value = total;
 };
+
 onMounted(() => {
     loadPage(currentPage.value);
+    console.log(props.forum_id);
 });
 watch(currentPage, (newPage) => {
     loadPage(newPage);

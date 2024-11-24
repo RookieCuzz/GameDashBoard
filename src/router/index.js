@@ -23,9 +23,10 @@ const routes = [
         component: Fpage
     },
     {
-        path: '/forumc',
+        path: '/forum/content/:forum_id',
         name: 'ForumContent',
-        component: ForumContent
+        component: ForumContent,
+        props: true
     },
     {
         path: '/page',
