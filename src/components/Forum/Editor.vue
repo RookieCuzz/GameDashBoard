@@ -14,7 +14,6 @@
         :mode="mode"
         @onCreated="handleCreated"
     />
-    <button @click="getText">insert text</button>
   </div>
 </template>
 <script>
@@ -52,8 +51,8 @@ export default {
 
 // 转换图片链接
     const customParseImageSrc = (src) => {
-      if (src.indexOf('http') !== 0) {
-        return `http://${src}`;
+      if (src.indexOf('https://') !== 0) {
+        return `https://${src}`;
       }
       return src;
     };

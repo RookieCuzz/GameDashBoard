@@ -24,9 +24,8 @@ const fetchNews = async (page = 1, limit = 10) => {
             content: 'Throw out your best memes that are created by you and are related to CCG.' +
                 'Throw out your best memes that are created by you and are related to CCG.Throw out' +
                 ' your best memes that are created by you and are related to CCG.Throw out your best memes ' +
-                'that are created by you and are related  to CCG.' +
+                'that are created by you and are related  to CCG.<br><img style="max-width: 100%;" src="/src/assets/forum/p1.jpg"><br><img  style="max-width: 100%;" src="/src/assets/forum/p3.jpg"><br>' +
                 'Throw out your best memes that are created by you and are related to CCG.',
-            meme: ['/src/assets/forum/p1.jpg','/src/assets/forum/p3.jpg','/src/assets/forum/p3.jpg'],
             likes: 150,
             liked: false,
             date: 'Jul 26, 2014',
@@ -37,7 +36,6 @@ const fetchNews = async (page = 1, limit = 10) => {
             username: 'musemat',
             avatar: '/src/assets/forum/8.jpg',
             content: '<p><u><strong>haaaae</strong></u><u><em>aaa</em></u><u>lo</u></p><h1>你好</h1><h2><em>各位mc们</em></h2><h1 style="text-align: center; line-height: 2;"><span style="color: rgb(225, 60, 57); background-color: rgb(245, 219, 77); font-size: 29px; font-family: 微软雅黑;">我们宣布一件重要的事情</span></h1><p style="text-align: left;">今天发布了新版本：</p><p style="text-align: left;"> &nbsp; &nbsp; &nbsp; &nbsp;0.10.0版本更新了如下功能：</p><ol><li style="text-align: left;">可以发布帖子</li><li style="text-align: left;">可以与他人交流</li><li style="text-align: left;">能够做出交互动作</li></ol><div data-w-e-type="todo" style="text-align: left;"><input type="checkbox" disabled="">还是不能参与大型活动</div><div data-w-e-type="todo" style="text-align: left;"><input type="checkbox" disabled="" checked="">喜欢黑暗系</div><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p>',
-            meme: [],
             likes: 163,
             liked: false,
             date: 'Jul 26, 2014',
@@ -48,7 +46,6 @@ const fetchNews = async (page = 1, limit = 10) => {
             username: 'Muffin',
             avatar: '/src/assets/forum/9.jpg',
             content: '',
-            meme: ['/src/assets/forum/p2.png'],
             likes: 104,
             liked: false,
             date: 'Jul 26, 2014',
@@ -59,7 +56,6 @@ const fetchNews = async (page = 1, limit = 10) => {
             username: 'Muffin',
             avatar: '/src/assets/forum/4.jpg',
             content: 'Halloween is almost here! Here are some ideas for your Halloween decorations and games:',
-            meme: [],
             likes: 98,
             liked: false,
             date: 'Jul 26, 2014',
@@ -70,7 +66,6 @@ const fetchNews = async (page = 1, limit = 10) => {
             username: 'Muffin',
             avatar: '/src/assets/forum/5.jpg',
             content: 'Here are some Halloween costumes that you can make with your friends:',
-            meme: [],
             likes: 85,
             liked: false,
             date: 'Jul 26, 2014',
@@ -81,7 +76,6 @@ const fetchNews = async (page = 1, limit = 10) => {
             username: 'Muffin',
             avatar: '/src/assets/forum/6.jpg',
             content: 'Here are some Halloween games that you can play with your friends:',
-            meme: [],
             likes: 78,
             liked: false,
             date: 'Jul 26, 2014',
@@ -92,7 +86,6 @@ const fetchNews = async (page = 1, limit = 10) => {
             username: 'Muffin',
             avatar: '/src/assets/forum/7.jpg',
             content: 'Here are some Halloween costumes that you can make with your friends:',
-            meme: [],
             likes: 72,
             liked: false,
             date: 'Jul 26, 2014',
@@ -180,9 +173,7 @@ const toggleLike = (index) => {
         <div class="floor-number">{{ post.floor }}</div>
         <div class="post-content">
           <div v-if="post.content" class="text" v-html="post.content"></div>
-          <div v-if="post.meme" class="meme">
-            <img :src="meme" v-for="meme in post.meme" alt="Meme Image">
-          </div>
+
           <div class="like-button-wrapper">
             <button class="like-button" :class="{ liked: post.liked }" @click="toggleLike(index)">
               <font-awesome-icon :icon="['fas', 'thumbs-up']" />
@@ -242,7 +233,6 @@ const toggleLike = (index) => {
   min-width: 20vw;
   margin: 0 auto;
   padding: 20px;
-  margin-top: 150px;
   border-radius: 68px 68px 0 0;
 }
 

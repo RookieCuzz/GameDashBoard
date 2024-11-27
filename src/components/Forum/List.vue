@@ -120,7 +120,7 @@ const changePage = (page) => {
 
                         <ToolTip :user="{
                                 name: 'jamesthesignificant',
-                                avatar: '/path/to/avatar.png',
+                                avatar: news.avatar,
                                 age: 15,
                                 location: 'Antarctica',
                                 joined: 'Oct 30, 2024',
@@ -170,7 +170,6 @@ const changePage = (page) => {
 .news-container {
     max-width: 800px;         /* 桌面视图限制最大宽度 */
     margin: 0 auto;           /* 居中显示 */
-    padding-top: 150px;
     padding-left: 20px;       /* 添加一些左右内边距 */
     padding-right: 20px;
     box-sizing: border-box;   /* 确保内边距不会影响宽度 */

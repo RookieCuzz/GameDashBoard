@@ -8,7 +8,7 @@ import ForumContent from "@/components/Forum/Content.vue";
 import Fpage from "@/components/Forum/Page.vue";
 const routes = [
     {
-        path: '/home',
+        path: '/',
         name: 'Home',
         component: Home
     },
