@@ -44,20 +44,17 @@ header {
 .main{
   background-color: transparent;
   width: 100vw;
-  min-height: 100vh;
   height: fit-content;
 }
-
 
 
 </style>
 
 <style scoped>
 
-
-
 .content{
     width: 100%;
+    min-width: 25%;
 }
 
 section {
@@ -165,11 +162,8 @@ section img#mountains_front {
     width: 15%;
 }
 /* 使用 max-width 来根据视口宽度调整布局 */
-@media (min-width: 100vw) {
-    .content {
-        min-width: 25%;
-    }
-}
+
+
 
 
 @media (max-width: 1200px) {

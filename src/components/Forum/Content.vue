@@ -131,7 +131,19 @@ const toggleLike = (index) => {
   }
   posts.value[index].liked = !posts.value[index].liked;
 };
-
+const handleEditorHtmlText = (content)=>{
+    const new_post_data = {
+        id: 4,
+        username: 'Muffin',
+        avatar: '/src/assets/forum/4.jpg',
+        content: content,
+        likes: 98,
+        liked: false,
+        date: 'Jul 26, 2014',
+        floor: '# 4',
+    }
+    postList.value.push(new_post_data)
+}
 </script>
 
 <template>
@@ -170,7 +182,7 @@ const toggleLike = (index) => {
           </div>
         </div>
         <!-- 楼层信息 -->
-        <div class="floor-number">{{ post.floor }}</div>
+        <div class="floor-number">{{ '# ' + (index+1) }}</div>
         <div class="post-content">
           <div v-if="post.content" class="text" v-html="post.content"></div>
 
@@ -187,39 +199,12 @@ const toggleLike = (index) => {
     </div>
     <!--    这是quill富文本编辑器-->
     <div>
-      <CustomEditor />
+      <CustomEditor @editorHtmlText="handleEditorHtmlText"/>
     </div>
-    <button class="quill-submit">发布</button>
+
   </div>
 </template>
 
-<style>
-
-.quill-submit {
-  background-color: #0080ff;
-  color: #fff;
-  border: none;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin-top: 10px;
-  margin-bottom: 300px;
-  cursor: pointer;
-  border-radius: 5px; /* 添加圆角 */
-  //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影 */
-  transition: background-color 0.3s, transform 0.2s; /* 添加过渡效果 */
-}
-.quill-submit:hover {
-  background-color: #005bb5; /* 鼠标悬停时更改背景色 */
-  transform: translateY(-2px); /* 鼠标悬停时轻微上移 */
-}
-.quill-submit:active {
-  transform: scale(0.95); /* 点击时缩小 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 点击时减小阴影 */
-}
-</style>
 
 <style scoped>
 
@@ -230,7 +215,7 @@ const toggleLike = (index) => {
 }
 .forum-container {
   max-width: 900px;
-  min-width: 20vw;
+  /*min-width: 20vw;*/
   margin: 0 auto;
   padding: 20px;
   border-radius: 68px 68px 0 0;
