@@ -30,8 +30,7 @@ export default {
     // 编辑器实例，必须用 shallowRef
     const editorRef = shallowRef()
     // 内容 HTML
-    const valueHtml = ref('<p><u><strong>haaaae</strong></u><u><em>aaa</em></u><u>lo</u></p><h1>你好</h1><h2><em>各位mc们</em></h2><h1 style="text-align: center; line-height: 2;"><span style="color: rgb(225, 60, 57); background-color: rgb(245, 219, 77); font-size: 29px; font-family: 微软雅黑;">我们宣布一件重要的事情</span></h1><p style="text-align: left;">今天发布了新版本：</p><p style="text-align: left;"> &nbsp; &nbsp; &nbsp; &nbsp;0.10.0版本更新了如下功能：</p><ol><li style="text-align: left;">可以发布帖子</li><li style="text-align: left;">可以与他人交流</li><li style="text-align: left;">能够做出交互动作</li></ol><div data-w-e-type="todo" style="text-align: left;"><input type="checkbox" disabled="">还是不能参与大型活动</div><div data-w-e-type="todo" style="text-align: left;"><input type="checkbox" disabled="" checked="">喜欢黑暗系</div><p style="text-align: left;"><br></p><p style="text-align: left;"><br></p>')
-
+    const valueHtml = ref()
     // 模拟 ajax 异步获取内容
     onMounted(() => {
       // setTimeout(() => {
@@ -84,7 +83,6 @@ export default {
           onUpdatedImage(imageNode) {
             if (imageNode == null) return;
             const { src, alt, href } = imageNode;
-            console.log('updated image', src, alt, href);
           },
           checkImage: customCheckImageFn,
           parseImageSrc: customParseImageSrc,
@@ -142,7 +140,6 @@ export default {
     display: inline-block;
     font-size: 16px;
     margin-top: 10px;
-    margin-bottom: 300px;
     cursor: pointer;
     border-radius: 5px; /* 添加圆角 */
 //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影 */

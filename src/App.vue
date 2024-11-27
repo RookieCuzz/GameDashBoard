@@ -8,17 +8,19 @@ import Login from "@/components/Login.vue";
 import Slider from "@/components/Slider.vue";
 </script>
 <template>
-    <section>
-        <img src="@/assets/images/stars.png" id="stars" ref="stars">
-        <img src="@/assets/images/moon.png" id="moon" ref="moon">
-        <img src="@/assets/images/mountains_behind.png" id="mountains_behind" ref="mountains_behind">
-        <h2 id="text" ref="text">明月谷</h2>
-        <a href="#sec" id="btn" ref="btn">PLAY.4399MC.CN</a>
-        <img src="@/assets/images/mountains_front.png" id="mountains_front" ref="mountains_front">
-    </section>
+
   <div class="main">
 <!--    <slider/>-->
-    <new-header/>
+      <section>
+          <img src="@/assets/images/stars.png" id="stars" ref="stars">
+          <img src="@/assets/images/moon.png" id="moon" ref="moon">
+          <img src="@/assets/images/mountains_behind.png" id="mountains_behind" ref="mountains_behind">
+          <h2 id="text" ref="text">明月谷</h2>
+          <a href="#sec" id="btn" ref="btn">PLAY.4399MC.CN</a>
+          <img src="@/assets/images/mountains_front.png" id="mountains_front" ref="mountains_front">
+          <new-header/>
+      </section>
+
       <div class="sec" id="sec">
           <!--    <chat-box/>-->
           <div class="content">
@@ -42,9 +44,13 @@ header {
 }
 
 .main{
-  background-color: transparent;
-  width: 100vw;
-  height: fit-content;
+    background-color: transparent;
+    width: 100%;
+    height: auto;               /* 高度自适应 */
+    display: flex;              /* 使用 flex 布局 */
+    flex-direction: column;     /* 垂直排列内容 */
+    font-weight: normal;
+    margin: 0 auto;
 }
 
 
@@ -60,7 +66,7 @@ header {
 section {
     position: relative;
     width: 100%;
-    height: 50vh;
+    height: 300px;
     padding: 100px;
     display: flex;
     justify-content: center;
@@ -123,60 +129,43 @@ section img#mountains_front {
 .sec {
     position: relative;
     padding: 50px;
-    display: flex; /* 使用flex布局 */
-    justify-content: center; /* 水平居中 */
-//align-items: center; /* 垂直居中 */
+    display: flex;              /* 使用 flex 布局 */
+    flex-direction: column;     /* 垂直排列内容 */
+    justify-content: center;    /* 垂直居中子元素 */
+    align-items: center;        /* 水平居中子元素 */
     background: linear-gradient(to bottom, #1c0522, #2b1055);
-    min-height: 2000px;
-    top: -10px;
+    height: auto;               /* 高度自适应 */
+    min-height: 100vh;          /* 确保最小高度为视口高度 */
 }
 
 .content {
     position: relative;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between; /* 保证内容项之间的间距 */
-    width: 100%; /* 确保内容占满可用宽度 */
-    max-width: 1200px; /* 限制内容的最大宽度 */
+    display: flex;              /* 使用 flex 布局 */
+    /*flex-direction: row;        !* 水平排列 .part1, .part2, .part3 *!*/
+    /*justify-content: center;    !* 水平居中 .part1, .part2, .part3 *!*/
+    width: 100%;
+    /*max-width: 1200px;          !* 限制最大宽度 *!*/
+    height: auto;               /* 高度自适应 */
+    padding: 10px;              /* 适当的内边距 */
 }
 
 .part1, .part3 {
     background: rgb(128, 128, 128);
     border-radius: 10px;
-    min-height: 100rem;
-    height: fit-content;
+    min-height: 200px;           /* 设置最小高度 */
+    width: 20%;                  /* 固定宽度 */
+    height: 600px;                /* 高度自适应 */
+    flex-shrink: 0;              /* 防止收缩 */
 }
 .part2 {
+    /*background: #ccc;           !* 设置背景色以便查看 *!*/
     border-radius: 10px;
-    min-height: 100rem;
-    height: fit-content;
-}
-.part2 {
-    width: 70%; /* 初始宽度为 50% */
-}
-.part1{
-    width: 15%; /* 初始宽度为 20% */
+    width: 60%;                  /* 固定宽度 */
+    height: auto;                /* 高度自适应 */
+    min-height: 200px;           /* 最小高度，防止过小 */
+    flex-grow: 1;                /* 占用剩余空间 */
 }
 
-.part3{
-    width: 15%;
-}
-/* 使用 max-width 来根据视口宽度调整布局 */
-
-
-
-
-@media (max-width: 1200px) {
-    .part1, .part3 {
-        width: 25%;
-        min-width: 150px;
-    }
-
-    .part2 {
-        width: 60%;
-        min-width: 300px;
-    }
-}
 
 
 .sec h2 {

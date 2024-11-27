@@ -1,15 +1,29 @@
 @import './base.css';
 
 #app {
-  max-width: 100%;
-  display: flex;
+  width: 100%;        /* 使用视口宽度的 100% */
+  max-width: 1000px;  /* 限制最大宽度 */
+  min-width: 1600px;   /* 设置合理的最小宽度 */
   flex-direction: column;
   font-weight: normal;
+  margin: 0 auto;
+  height: 100%;       /* 确保 #app 占满整个页面 */
 }
+
+html, body {
+  height: 100%;               /* 确保 html 和 body 高度占满整个视口 */
+  margin: 0;                  /* 清除默认的外边距 */
+  padding: 0;                 /* 清除默认的内边距 */
+  overflow-x: hidden;         /* 防止横向滚动条 */
+  display: flex;              /* 使用 flex 布局 */
+  flex-direction: column;     /* 垂直排列页面元素 */
+  background: linear-gradient(#2b1055, #7597de); /* 设置背景渐变 */
+}
+
 body {
-  min-height: 100vh;
-  overflow-x: hidden;
-  background: linear-gradient(#2b1055,#7597de);
+  background: linear-gradient(#2b1055, #7597de);
+  display: flex;
+  flex-direction: column;
 }
 a,
 .green {
@@ -25,14 +39,14 @@ a,
   }
 }
 
-@media (min-width: 99024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+/*@media (min-width: 99024px) {*/
+/*  body {*/
+/*    display: flex;*/
+/*    place-items: center;*/
+/*  }*/
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-}
+/*  #app {*/
+/*    display: grid;*/
+/*    grid-template-columns: 1fr 1fr;*/
+/*  }*/
+/*}*/

@@ -112,10 +112,9 @@ const loadPage = async (page) => {
 
 onMounted(() => {
     loadPage(currentPage.value);
-    console.log(props.forum_id);
 });
 watch(currentPage, (newPage) => {
-    loadPage(newPage);
+    loadPage(newPage);//更新页面时，也是执行同一个函数，导致多次请求服务器
 });
 const changePage = (page) => {
     if (page !== currentPage.value) {
@@ -198,7 +197,7 @@ const handleEditorHtmlText = (content)=>{
       </div>
     </div>
     <!--    这是quill富文本编辑器-->
-    <div>
+    <div class="quill-editor">
       <CustomEditor @editorHtmlText="handleEditorHtmlText"/>
     </div>
 
@@ -207,7 +206,6 @@ const handleEditorHtmlText = (content)=>{
 
 
 <style scoped>
-
 .text {
   text-align: justify;
   word-wrap: break-word; /* 允许在单词边界内换行 */
